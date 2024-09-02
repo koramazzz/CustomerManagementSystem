@@ -33,7 +33,7 @@ public class CustomerUI extends JFrame {
 
         this.add(container);
         this.setTitle("Add/Edit Customer");
-        this.setSize(300,500);
+        this.setSize(300,350);
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
