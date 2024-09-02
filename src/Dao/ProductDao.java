@@ -120,4 +120,18 @@ public class ProductDao {
 
         return product;
     }
+
+    public ArrayList<Product> query(String query){
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            ResultSet rs = this.connection.createStatement().executeQuery(query);
+            while (rs.next()){
+                products.add(this.match(rs));
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return products;
+    }
 }

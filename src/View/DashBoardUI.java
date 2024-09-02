@@ -3,6 +3,7 @@ package View;
 import Business.CustomerController;
 import Business.ProductController;
 import Core.Helper;
+import Core.Item;
 import Entity.Customer;
 import Entity.Product;
 import Entity.User;
@@ -34,7 +35,7 @@ public class DashBoardUI extends JFrame {
     private JPanel pnl_product_filter;
     private JTextField fld_f_product_name;
     private JTextField fld_f_product_code;
-    private JComboBox cmb_f_product_stock;
+    private JComboBox<Item> cmb_f_product_stock;
     private JButton btn_product_filter;
     private JButton btn_product_filter_reset;
     private JButton btn_product_new;
@@ -87,6 +88,10 @@ public class DashBoardUI extends JFrame {
         loadProductTable(null);
         loadProductPopupMenu();
         loadProductButtonEvent();
+        this.cmb_f_product_stock.addItem(new Item(1,"In stock"));
+        this.cmb_f_product_stock.addItem(new Item(2,"Out of stock"));
+        this.cmb_f_product_stock.setSelectedItem(null);
+
 
     }
 
@@ -100,7 +105,26 @@ public class DashBoardUI extends JFrame {
                     loadProductTable(null);
                 }
             });
+
+
         });
+
+        this.btn_product_filter.addActionListener(e -> {
+            ArrayList<Product> filteredProducts = this.productController.filter(
+                    this.fld_f_product_name.getText(),
+                    this.fld_f_product_code.getText(),
+                    (Item) this.cmb_f_product_stock.getSelectedItem()
+            );
+            loadProductTable(filteredProducts);
+        });
+
+        this.btn_product_filter_reset.addActionListener(e -> {
+            this.fld_f_product_code.setText(null);
+            this.fld_f_product_name.setText(null);
+            this.cmb_f_product_stock.setSelectedItem(null);
+            loadProductTable(null);
+        });
+
     }
     private void loadProductPopupMenu() {
         this.tbl_product.addMouseListener(new MouseAdapter() {
@@ -182,9 +206,10 @@ public class DashBoardUI extends JFrame {
         });
 
         this.btn_customer_filter_reset.addActionListener(e -> {
-            loadCustomerTable(null);
             this.cmb_f_customer_type.setSelectedItem(null);
             this.fld_f_customer_name.setText(null);
+            loadCustomerTable(null);
+
         });
     }
     private void loadCustomerPopupMenu() {
