@@ -8,6 +8,7 @@ import Entity.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DashBoardUI extends JFrame {
@@ -20,7 +21,7 @@ public class DashBoardUI extends JFrame {
     private JTable tbl_customer;
     private JPanel pnl_customer_filter;
     private JTextField fld_f_customer_name;
-    private JComboBox cmb_customer_type;
+    private JComboBox<Customer> cmb_f_customer_type;
     private JButton btn_customer_filter;
     private JButton btn_customer_filter_reset;
     private JButton btn_customer_new;
@@ -54,13 +55,20 @@ public class DashBoardUI extends JFrame {
             LoginUI loginUI = new LoginUI();
         });
 
+
+        // Customer Tab
         loadCustomerTable(null);
         loadCustomerPopupMenu();
         loadCustomerButtonEvent();
+        this.cmb_f_customer_type.setModel(new DefaultComboBoxModel(Customer.TYPE.values()));
+        this.cmb_f_customer_type.setSelectedItem(null);
+
 
     }
 
+
     private void loadCustomerButtonEvent() {
+
         this.btn_customer_new.addActionListener(e -> {
             CustomerUI customerUI = new CustomerUI(new Customer());
             customerUI.addWindowListener(new WindowAdapter() {
@@ -69,6 +77,20 @@ public class DashBoardUI extends JFrame {
                     loadCustomerTable(null);
                 }
             });
+        });
+
+        this.btn_customer_filter.addActionListener(e -> {
+            ArrayList<Customer> filteredCustomers = this.customerController.filter(
+                    this.fld_f_customer_name.getText(),
+                    (Customer.TYPE) this.cmb_f_customer_type.getSelectedItem()
+            );
+            loadCustomerTable(filteredCustomers);
+        });
+
+        this.btn_customer_filter_reset.addActionListener(e -> {
+            loadCustomerTable(null);
+            this.cmb_f_customer_type.setSelectedItem(null);
+            this.fld_f_customer_name.setText(null);
         });
     }
 
