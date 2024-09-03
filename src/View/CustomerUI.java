@@ -33,7 +33,7 @@ public class CustomerUI extends JFrame {
 
         this.add(container);
         this.setTitle("Add/Edit Customer");
-        this.setSize(300,350);
+        this.setSize(300,500);
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -54,12 +54,12 @@ public class CustomerUI extends JFrame {
         btn_customer_save.addActionListener(e -> {
 
             JTextField[] checkList = {this.fld_customer_name,this.fld_customer_phone};
-            if (Helper.isFieldListEmpty(checkList)){
+            if (Helper.isFieldListEmpty(checkList)) {
                 Helper.showMsg("fill");
             } else if (!Helper.isFieldEmpty(this.fld_customer_mail) && !Helper.isMailValid(this.fld_customer_mail.getText())) {
                 Helper.showMsg("Please enter a valid e-mail address");
             } else {
-                boolean result = false;
+                boolean result;
                 this.customer.setName(this.fld_customer_name.getText());
                 this.customer.setPhone(this.fld_customer_phone.getText());
                 this.customer.setMail(this.fld_customer_mail.getText());

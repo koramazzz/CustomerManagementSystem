@@ -44,7 +44,7 @@ public class ProductDao {
             PreparedStatement pr = this.connection.prepareStatement(query);
             pr.setString(1,product.getName());
             pr.setString(2,product.getCode());
-            pr.setDouble(3,product.getPrice());
+            pr.setInt(3,product.getPrice());
             pr.setInt(4,product.getStock());
 
             return pr.executeUpdate() != -1;
@@ -73,7 +73,7 @@ public class ProductDao {
     }
 
     public boolean update(Product product){
-        String query = "UPDATE product SET  " +
+        String query = "UPDATE product SET " +
                 "name = ? , " +
                 "code = ? , " +
                 "price = ? , " +
@@ -83,7 +83,7 @@ public class ProductDao {
             PreparedStatement pr = this.connection.prepareStatement(query);
             pr.setString(1,product.getName());
             pr.setString(2,product.getCode());
-            pr.setDouble(3,product.getPrice());
+            pr.setInt(3,product.getPrice());
             pr.setInt(4,product.getStock());
             pr.setInt(5, product.getId());
 
@@ -115,7 +115,7 @@ public class ProductDao {
         product.setId(rs.getInt("id"));
         product.setName(rs.getString("name"));
         product.setCode(rs.getString("code"));
-        product.setPrice(rs.getDouble("price"));
+        product.setPrice(rs.getInt("price"));
         product.setStock(rs.getInt("stock"));
 
         return product;

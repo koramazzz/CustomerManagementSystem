@@ -73,7 +73,7 @@ public class CustomerDao {
     }
 
     public boolean update(Customer customer){
-        String query = "UPDATE customer SET  " +
+        String query = "UPDATE customer SET " +
                 "name = ? , " +
                 "type = ? , " +
                 "phone = ? , " +

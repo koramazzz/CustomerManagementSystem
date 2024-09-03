@@ -59,7 +59,4 @@ public class ProductController {
         }
         return this.productDao.query(query);
     }
-
-
-
 }
