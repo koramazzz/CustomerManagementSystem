@@ -10,11 +10,6 @@ import java.sql.Connection;
 public class App {
     public static void main(String[] args) {
         Helper.setTheme();
-        // LoginUI loginUI = new LoginUI();
-        UserController userController = new UserController();
-        User user = userController.findByLogin("omer@beyza.com","191121");
-        DashBoardUI dashBoardUI = new DashBoardUI(user);
-
-
+        LoginUI loginUI = new LoginUI();
     }
 }
